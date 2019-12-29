@@ -10,11 +10,11 @@ namespace ShopDemo.WebUI.Controllers
 {
     public class ProductCategoryManagerController : Controller
     {
-        ProductCategoryRepository context; //create instance of ProductRepository found in DataAccess.InMemory
+        InMemoryRepository<ProductCategory> context; //create instance of ProductRepository found in DataAccess.InMemory
 
         public ProductCategoryManagerController() //constructor for initiazlizing repository
         {
-            context = new ProductCategoryRepository();
+            context = new InMemoryRepository<ProductCategory>();
         }
 
         // GET: ProductManager
