@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ShopDemo.Core.Contracts;
 using ShopDemo.Core.Models;
 using ShopDemo.Core.ViewModels;
 using ShopDemo.DataAccess.InMemory;
@@ -11,13 +12,13 @@ namespace ShopDemo.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        InMemoryRepository<Product> context; //create instance of ProductRepository found in DataAccess.InMemory
-        InMemoryRepository<ProductCategory> productCategories;
+        IRepository<Product> context; //create instance of ProductRepository found in DataAccess.InMemory
+        IRepository<ProductCategory> productCategories;
         
-        public ProductManagerController() //constructor for initiazlizing repository
+        public ProductManagerController(IRepository<Product> productContext, IRepository<ProductCategory> categoryContext) //constructor for initiazlizing repository
         {
-            context = new InMemoryRepository<Product>();
-            productCategories = new InMemoryRepository<ProductCategory>();
+            context = productContext;
+            productCategories = categoryContext;
         }
 
         // GET: ProductManager

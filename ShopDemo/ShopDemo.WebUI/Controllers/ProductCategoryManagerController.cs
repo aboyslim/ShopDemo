@@ -1,4 +1,5 @@
-﻿using ShopDemo.Core.Models;
+﻿using ShopDemo.Core.Contracts;
+using ShopDemo.Core.Models;
 using ShopDemo.DataAccess.InMemory;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,11 @@ namespace ShopDemo.WebUI.Controllers
 {
     public class ProductCategoryManagerController : Controller
     {
-        InMemoryRepository<ProductCategory> context; //create instance of ProductRepository found in DataAccess.InMemory
+        IRepository<ProductCategory> context; //create instance of ProductRepository found in DataAccess.InMemory
 
-        public ProductCategoryManagerController() //constructor for initiazlizing repository
+        public ProductCategoryManagerController(IRepository<ProductCategory> context) //constructor for initiazlizing repository
         {
-            context = new InMemoryRepository<ProductCategory>();
+            this.context = context;
         }
 
         // GET: ProductManager

@@ -1,4 +1,5 @@
-﻿using ShopDemo.Core.Models;
+﻿using ShopDemo.Core.Contracts;
+using ShopDemo.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ShopDemo.DataAccess.InMemory
 {
-    public class InMemoryRepository<T> where T : BaseEntity //T in the brackets is a placeholder
+    public class InMemoryRepository<T> : IRepository<T> where T : BaseEntity //T in the brackets is a placeholder
     {
         ObjectCache cache = MemoryCache.Default;
         List<T> items;
@@ -19,7 +20,7 @@ namespace ShopDemo.DataAccess.InMemory
         {
             className = typeof(T).Name;
             items = cache[className] as List<T>;
-            if(items == null)
+            if (items == null)
             {
                 items = new List<T>();
             }
@@ -39,7 +40,7 @@ namespace ShopDemo.DataAccess.InMemory
         {
             T tToUpdate = items.Find(i => i.id == t.id);
 
-            if(tToUpdate != null)
+            if (tToUpdate != null)
             {
                 tToUpdate = t;
             }
