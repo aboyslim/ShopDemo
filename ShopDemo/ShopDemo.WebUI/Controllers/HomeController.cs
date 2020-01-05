@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ShopDemo.Core.Contracts;
+using ShopDemo.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +10,32 @@ namespace ShopDemo.WebUI.Controllers
 {
     public class HomeController : Controller
     {
+        IRepository<Product> context; //create instance of ProductRepository found in DataAccess.InMemory
+        IRepository<ProductCategory> productCategories;
+
+        public HomeController(IRepository<Product> productContext, IRepository<ProductCategory> categoryContext) //constructor for initiazlizing repository
+        {
+            context = productContext;
+            productCategories = categoryContext;
+        }
+
         public ActionResult Index()
         {
-            return View();
+            List<Product> products = context.Collection().ToList();
+            return View(products);
+        }
+
+        public ActionResult Details(string id)
+        {
+            Product product = context.Find(id);
+            if(product == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                return View(product);
+            }
         }
 
         public ActionResult About()
